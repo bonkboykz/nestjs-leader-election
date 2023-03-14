@@ -1,6 +1,6 @@
 import { Injectable, Logger } from "@nestjs/common";
-import { createNodeRedisClient } from "handy-redis";
 import { CALL_ELECTION, CLAIM_POWER, HEARTBEAT, VOTE } from "./Constants";
+import { Redis, RedisOptions } from "ioredis";
 
 @Injectable()
 export class RedisClientService {
@@ -12,23 +12,18 @@ export class RedisClientService {
 
   private readonly logger = new Logger(RedisClientService.name);
 
-  constructor(config: {
-    host: string;
-    port: number;
-    db: number;
-    prefix: string;
-  }) {
-    this.client = createNodeRedisClient(config);
+  constructor(config: RedisOptions & { prefix?: string }) {
+    this.client = new Redis(config);
 
-    this.publisherClient = createNodeRedisClient(config);
+    this.publisherClient = new Redis(config);
 
     this.prefix = `nestjs-leader-election-${config.prefix}:`;
 
-    this.client.nodeRedis.on("connect", () => {
+    this.client.on("connect", () => {
       this.logger.log("Redis connected");
     });
 
-    this.client.nodeRedis.on("error", () => {
+    this.client.on("error", () => {
       this.logger.error("Redis error");
     });
   }

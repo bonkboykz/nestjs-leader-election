@@ -26,7 +26,7 @@ export class HeartbeatService {
   constructor(private redisService: RedisClientService) {
     this.logger.log(`This Node ID: ${this.nodeId}`);
 
-    this.redisService.publisherClient.nodeRedis.on(
+    this.redisService.publisherClient.on(
       "message",
       async (channel, message) => {
         if (channel === this.redisService.getHeartbeatChannelName()) {
@@ -84,19 +84,19 @@ export class HeartbeatService {
     );
 
     // Finally subscribe to the heartbeat channel to receive heartbeats from the other nodes.
-    this.redisService.publisherClient.nodeRedis.subscribe(
+    this.redisService.publisherClient.subscribe(
       this.redisService.getHeartbeatChannelName()
     );
 
-    this.redisService.publisherClient.nodeRedis.subscribe(
+    this.redisService.publisherClient.subscribe(
       this.redisService.getClaimPowerChannelName()
     );
 
-    this.redisService.publisherClient.nodeRedis.subscribe(
+    this.redisService.publisherClient.subscribe(
       this.redisService.getCallElectionChannelName()
     );
 
-    this.redisService.publisherClient.nodeRedis.subscribe(
+    this.redisService.publisherClient.subscribe(
       this.redisService.getVoteChannelName()
     );
 

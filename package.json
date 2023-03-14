@@ -1,6 +1,6 @@
 {
-  "name": "@fxdigital/nestjs-leader-election",
-  "version": "1.0.0",
+  "name": "@bonkboykz/nestjs-leader-election",
+  "version": "2.0.0",
   "description": "Adds quasi-Raft Consensus leader election to NestJs microservice instances using a Redis broker.",
   "license": "MIT",
   "contributors": [
@@ -29,17 +29,13 @@
     "lib/**/*.js",
     "lib/**/*.js.map"
   ],
-  "homepage": "https://github.com/wearefx/nestjs-leader-election",
+  "homepage": "https://github.com/bonkboykz/nestjs-leader-election",
   "bugs": {
-    "url": "https://github.com/wearefx/nestjs-leader-election/-/issues"
+    "url": "https://github.com/bonkboykz/nestjs-leader-election/-/issues"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/wearefx/nestjs-leader-election.git"
-  },
-  "engineStrict": true,
-  "engines": {
-    "node": "^14.0.0"
+    "url": "https://github.com/bonkboykz/nestjs-leader-election.git"
   },
   "commitlint": {
     "extends": [
@@ -48,8 +44,8 @@
   },
   "husky": {
     "hooks": {
-      "commit-msg": "yarn commitlint -E HUSKY_GIT_PARAMS",
-      "pre-commit": "yarn lint-staged"
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "pre-commit": "lint-staged"
     }
   },
   "lint-staged": {
@@ -58,28 +54,26 @@
       "git add"
     ],
     "*.{js,jsx,ts,tsx}": [
-      "eslint --fix",
       "prettier --write",
       "git add"
     ]
   },
   "scripts": {
-    "test": "yarn jest",
-    "build": "yarn tsc -b"
+    "test": "jest",
+    "build": "tsc -b"
   },
   "dependencies": {
-    "@nestjs/common": "8.0.6",
-    "@nestjs/config": "1.0.1",
-    "@nestjs/schedule": "1.0.1",
-    "handy-redis": "2.2.2",
+    "@nestjs/common": "^9.0.0",
+    "@nestjs/config": "^2.3.1",
+    "@nestjs/schedule": "^2.2.0",
+    "ioredis": "^5.3.1",
     "rxjs": "7.3.0",
     "uuid": "8.3.2"
   },
   "devDependencies": {
-    "@commitlint/cli": "13.1.0",
-    "@commitlint/config-conventional": "13.1.0",
-    "@commitlint/prompt-cli": "13.1.0",
-    "@fxd-dev-util/eslint-config-base": "1.0.0",
+    "@commitlint/cli": "^17.4.0",
+    "@commitlint/config-conventional": "^17.4.0",
+    "@commitlint/prompt-cli": "^17.4.0",
     "@types/cron": "1.7.3",
     "@types/jest": "27.0.1",
     "@types/node": "16.3.3",
@@ -94,9 +88,9 @@
     "eslint-plugin-promise": "5.1.0",
     "husky": "4.3.8",
     "jest": "27.1.1",
-    "lint-staged": "11.1.2",
+    "lint-staged": "^13.2.0",
     "prettier": "2.4.0",
     "ts-jest": "27.0.5",
-    "typescript": "4.3.5"
+    "typescript": "^4.7.0"
   }
 }

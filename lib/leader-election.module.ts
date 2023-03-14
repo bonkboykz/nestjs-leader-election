@@ -1,5 +1,6 @@
 import { DynamicModule, Global, Module } from "@nestjs/common";
 import { ScheduleModule } from "@nestjs/schedule";
+import { RedisOptions } from "ioredis";
 import { HeartbeatService } from "./Heartbeat.service";
 import { LeaderElectionHelper } from "./LeaderElectionHelper";
 import { RedisClientService } from "./RedisClient.service";
@@ -11,18 +12,13 @@ import { RedisClientService } from "./RedisClient.service";
   exports: [LeaderElectionHelper],
 })
 export class LeaderElectionModule {
-  static forRoot(redisConfig: {
-    host: string;
-    port: number;
-    db: number;
-    prefix: string;
-  }): DynamicModule {
+  static forRoot(config: RedisOptions & { prefix: string }): DynamicModule {
     return {
       module: LeaderElectionModule,
       providers: [
         {
           provide: RedisClientService,
-          useValue: new RedisClientService(redisConfig),
+          useValue: new RedisClientService(config),
         },
         {
           provide: HeartbeatService,

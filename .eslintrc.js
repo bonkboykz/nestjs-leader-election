@@ -1,6 +1,5 @@
 module.exports = {
   root: true,
-  extends: ["@fxd-dev-util/eslint-config-base"],
   env: {
     node: true,
   },
