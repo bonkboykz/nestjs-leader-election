@@ -1,4 +1,4 @@
-export const HEARTBEAT_INTERVAL = 2000;
+export const HEARTBEAT_INTERVAL = 60000;
 export const HEARTBEAT = "heartbeat";
 export const CLAIM_POWER = "claim-power";
 export const VOTE = "vote";
