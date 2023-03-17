@@ -203,7 +203,12 @@ export class HeartbeatService {
     this.logger.log(`Existing leader is ${existingLeader}`);
 
     if (existingLeader === null) {
-      await this.callElection();
+      // if this node is single active instance claim power
+      if (Object.keys(this.activeNodeTimestamps).length <= 1) {
+        await this.claimPower();
+      } else {
+        await this.callElection();
+      }
     } else {
       if ((await this.leaderIsConnected()) === true) {
         // safe, existing leader exists no cap
