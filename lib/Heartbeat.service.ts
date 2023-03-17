@@ -159,6 +159,8 @@ export class HeartbeatService {
       this.logger.log("Calling an election");
       this.isInElection = true;
       await this.redisService.callElection(this.nodeId);
+    } else {
+      this.logger.log("Already in election");
     }
   }
 
@@ -194,7 +196,11 @@ export class HeartbeatService {
     )
   )
   async checkTheLeader(): Promise<void> {
+    this.logger.log("Checking the leader");
+
     const existingLeader = this.leaderId;
+
+    this.logger.log(`Existing leader is ${existingLeader}`);
 
     if (existingLeader === null) {
       await this.callElection();
@@ -205,7 +211,13 @@ export class HeartbeatService {
       }
 
       // heck oh no the leader aint there no more
-      await this.callElection();
+
+      // if this node is single active instance claim power
+      if (Object.keys(this.activeNodeTimestamps).length <= 1) {
+        await this.claimPower();
+      } else {
+        await this.callElection();
+      }
     }
 
     return undefined;
