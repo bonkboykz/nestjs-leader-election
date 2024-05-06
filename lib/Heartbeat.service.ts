@@ -24,7 +24,7 @@ export class HeartbeatService {
   private votesForMe = 0;
 
   constructor(private redisService: RedisClientService) {
-    this.logger.log(`This Node ID: ${this.nodeId}`);
+    this.logger.verbose(`This Node ID: ${this.nodeId}`);
 
     this.redisService.publisherClient.on(
       "message",
@@ -32,7 +32,7 @@ export class HeartbeatService {
         if (channel === this.redisService.getHeartbeatChannelName()) {
           if (validate(message) && version(message) === 4) {
             if (!(this.activeNodeTimestamps[message] instanceof Date)) {
-              this.logger.log(`Found new Node: ${message}`);
+              this.logger.verbose(`Found new Node: ${message}`);
             }
             this.activeNodeTimestamps[message] = new Date();
           } else {
@@ -46,12 +46,12 @@ export class HeartbeatService {
             this.isInElection = false;
             this.votesForMe = 0;
 
-            this.logger.log(`The leader is now [${message}]`);
+            this.logger.verbose(`The leader is now [${message}]`);
 
             if (message === this.nodeId) {
-              this.logger.log(`I am the LEADER.`);
+              this.logger.verbose(`I am the LEADER.`);
             } else {
-              this.logger.log(`I am a FOLLOWER.`);
+              this.logger.verbose(`I am a FOLLOWER.`);
             }
           }
         } else if (channel === this.redisService.getVoteChannelName()) {
@@ -113,7 +113,7 @@ export class HeartbeatService {
 
   removeNodeFromList(nodeId: string): void {
     delete this.activeNodeTimestamps[nodeId];
-    this.logger.log(`Removed node [${nodeId}] from the list.`);
+    this.logger.verbose(`Removed node [${nodeId}] from the list.`);
   }
 
   @Interval(HEARTBEAT_INTERVAL)
@@ -149,18 +149,18 @@ export class HeartbeatService {
   }
 
   async claimPower(): Promise<void> {
-    this.logger.log("Claiming Power");
+    this.logger.verbose("Claiming Power");
     this.isInElection = false;
     await this.redisService.claimPower(this.nodeId);
   }
 
   async callElection(): Promise<void> {
     if (!this.isInElection) {
-      this.logger.log("Calling an election");
+      this.logger.verbose("Calling an election");
       this.isInElection = true;
       await this.redisService.callElection(this.nodeId);
     } else {
-      this.logger.log("Already in election");
+      this.logger.verbose("Already in election");
     }
   }
 

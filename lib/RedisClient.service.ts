@@ -20,7 +20,7 @@ export class RedisClientService {
     this.prefix = `nestjs-leader-election-${config.prefix}:`;
 
     this.client.on("connect", () => {
-      this.logger.log("Redis connected");
+      this.logger.verbose("Redis connected");
     });
 
     this.client.on("error", () => {
