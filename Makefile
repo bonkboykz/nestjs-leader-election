@@ -22,15 +22,15 @@ fix:
 
 .PHONY: clean
 clean:
-	yarn tsc --build --clean
+	npx tsc --build --clean
 
 .PHONY: build
 build:
-	yarn tsc -b
+	npx tsc -b
 
 .PHONY: build.watch
 build.watch:
-	yarn tsc -b -w
+	npx tsc -b -w
 
 .PHONY: setup-ide
 setup-ide:

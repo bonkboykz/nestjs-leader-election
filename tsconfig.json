@@ -17,7 +17,7 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "rootDir": "lib",
-    "outDir": "lib"
+    "outDir": "dist"
   },
   "include": ["**/*", ".eslintrc.js"],
   "exclude": ["__tests__"]
