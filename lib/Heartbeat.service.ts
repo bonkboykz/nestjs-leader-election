@@ -196,11 +196,11 @@ export class HeartbeatService {
     )
   )
   async checkTheLeader(): Promise<void> {
-    this.logger.log("Checking the leader");
+    this.logger.verbose("Checking the leader");
 
     const existingLeader = this.leaderId;
 
-    this.logger.log(`Existing leader is ${existingLeader}`);
+    this.logger.verbose(`Existing leader is ${existingLeader}`);
 
     if (existingLeader === null) {
       // if this node is single active instance claim power

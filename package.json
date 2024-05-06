@@ -1,6 +1,6 @@
 {
   "name": "@bonkboykz/nestjs-leader-election",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "Adds quasi-Raft Consensus leader election to NestJs microservice instances using a Redis broker.",
   "license": "MIT",
   "contributors": [
